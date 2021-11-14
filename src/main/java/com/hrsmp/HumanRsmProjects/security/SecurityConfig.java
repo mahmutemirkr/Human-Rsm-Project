@@ -12,8 +12,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.hrsmp.HumanRsmProjects.security.jwt.JwtAuthorizationFilter;
 
 
 @Configuration
@@ -41,6 +44,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/api/authentication/**").permitAll()
 		.anyRequest().authenticated();
 		
+		
+		http.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+		
+	}
+	
+	@Bean
+	public  JwtAuthorizationFilter jwtAuthorizationFilter() {
+		
+		return new JwtAuthorizationFilter();
 	}
 	
 	

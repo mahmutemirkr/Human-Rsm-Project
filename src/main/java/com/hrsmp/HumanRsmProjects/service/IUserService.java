@@ -10,4 +10,8 @@ public interface IUserService {
 
 	void makeAdmin(String username);
 
+	Object saveUser(org.springframework.security.core.userdetails.User user);
+	
+	User saveUser(User user);
+
 }

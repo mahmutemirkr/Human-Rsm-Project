@@ -18,11 +18,8 @@ import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- * @author sa
- * @date 3.07.2021
- * @time 19:15
- */
+
+
 @Component
 public class JwtProvider implements IJwtProvider
 {
@@ -62,7 +59,7 @@ public class JwtProvider implements IJwtProvider
         Long userId = claims.get("userId", Long.class);
 
         Set<GrantedAuthority> authorities = Arrays.stream(claims.get("roles").toString().split(","))
-                .map(SecurityUtils::convertToAuthority)
+        		.map(SecurityUtils::convertAuthority)
                 .collect(Collectors.toSet());
 
         UserDetails userDetails = UserPrincipal.builder()

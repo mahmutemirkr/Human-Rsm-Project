@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -35,6 +36,10 @@ public class User{
 	private LocalDateTime createTime;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name= "name", nullable= false, length=100)
+	@Column(name= "role", nullable= false, length=100)
 	private Role role;
+	
+	@Transient
+	private String token;
+
 }

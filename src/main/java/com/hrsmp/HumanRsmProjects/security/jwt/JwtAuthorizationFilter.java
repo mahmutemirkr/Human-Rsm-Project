@@ -11,9 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class JwtAuthorizationFilter extends OncePerRequestFilter {
-	
-	@Autowired
+
+public class JwtAuthorizationFilter extends OncePerRequestFilter
+{
+    @Autowired
     private IJwtProvider jwtProvider;
 
     @Override
@@ -34,5 +35,4 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
-
 }
