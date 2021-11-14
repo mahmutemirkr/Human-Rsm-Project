@@ -59,7 +59,7 @@ public class JwtProvider implements IJwtProvider
         Long userId = claims.get("userId", Long.class);
 
         Set<GrantedAuthority> authorities = Arrays.stream(claims.get("roles").toString().split(","))
-        		.map(SecurityUtils::convertAuthority)
+                .map(SecurityUtils::convertToAuthority)
                 .collect(Collectors.toSet());
 
         UserDetails userDetails = UserPrincipal.builder()
