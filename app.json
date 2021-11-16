@@ -1,5 +1,5 @@
 {
-	"name":"sha-person-hrm",
+	"name":"human-rsm",
 	"buildpacks":[
     {
       "url":"heroku/gradle"
