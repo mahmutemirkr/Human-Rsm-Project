@@ -1,0 +1,8 @@
+{
+	"name":"sha-person-hrm",
+	"buildpacks":[
+    {
+      "url":"heroku/gradle"
+    }
+  ]
+}

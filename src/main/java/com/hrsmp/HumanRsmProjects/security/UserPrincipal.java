@@ -6,7 +6,9 @@ import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.hrsmp.HumanRsmProjects.model.Role;
 import com.hrsmp.HumanRsmProjects.model.User;
+import com.hrsmp.HumanRsmProjects.util.SecurityUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +31,19 @@ public class UserPrincipal implements UserDetails{
 	transient private String password;
 	transient private User user;
 	private Set<GrantedAuthority> authorities;
+	
+	 public static UserPrincipal createSuperUser()
+	    {
+	        Set<GrantedAuthority> authorities = Set.of(SecurityUtils.convertToAuthority(Role.SYSTEM_MANAGER.name()));
+
+	        return UserPrincipal.builder()
+	                .id(-1L)
+	                .username("system-administrator")
+	                .authorities(authorities)
+	                .build();
+	    }
+	
+	
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

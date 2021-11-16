@@ -1,8 +1,10 @@
 package com.hrsmp.HumanRsmProjects.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,12 +18,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.hrsmp.HumanRsmProjects.model.Role;
 import com.hrsmp.HumanRsmProjects.security.jwt.JwtAuthorizationFilter;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
+	
+	@Value("${authentication.internal-api-key}")
+	private String internalApiKey;
 	
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
@@ -42,11 +48,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		http.authorizeRequests()
 		.antMatchers("/api/authentication/**").permitAll()
+		.antMatchers(HttpMethod.GET, "/api/person").permitAll()
+		.antMatchers("/api/person/**").hasRole(Role.ADMIN.name())
+        .antMatchers("/api/internal/**").hasRole(Role.SYSTEM_MANAGER.name())
 		.anyRequest().authenticated();
 		
 		
-		http.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+				.addFilterBefore(internalApiAuthenticationFilter(), JwtAuthorizationFilter.class);
 		
+	}
+	
+	@Bean
+	public InternalApiAuthenticationFilter internalApiAuthenticationFilter() {
+		
+		return new InternalApiAuthenticationFilter(internalApiKey);
 	}
 	
 	@Bean
