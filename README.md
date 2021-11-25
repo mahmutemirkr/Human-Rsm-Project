@@ -2,7 +2,7 @@
 
 ## Java-Spring Boot RestApi
 
-#Spring Boot Book Seller
+#Spring Boot Seller
 
 ### Endpoints
 
