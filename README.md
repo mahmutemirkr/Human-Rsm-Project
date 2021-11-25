@@ -2,8 +2,6 @@
 
 ## Java-Spring Boot RestApi
 
-#Spring Boot Seller
-
 ### Endpoints
 
 #### Sign-Up
